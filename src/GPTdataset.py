@@ -8,11 +8,10 @@ class GPTdataset(Dataset):
         self.target_ids = []
         
         encoded = tokenizer.tokenize(text)
-        
         for i in range(0,len(encoded)-max_length,stride):
+            
             current_input = encoded[i:i+max_length]
             current_target = encoded[i+1:i+max_length+1]
-            
             self.input_ids.append(tensor(current_input))
             self.target_ids.append(tensor(current_target))
             
