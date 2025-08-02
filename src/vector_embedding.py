@@ -1,28 +1,29 @@
 from torch.nn import Embedding
 from my_data_loader import create_dataloader
-from torch.nn import Embedding
+import torch
 
-with open("data/oromic_data.txt","r") as file:
-    raw_data = file.read()
-file.close()
+def get_vector_embedding(raw_data):
+    max_length = 4
 
-max_length = 4
+    dataloader = create_dataloader(text=raw_data, batch_size=8, stride=4, max_length=max_length)
 
-dataloader = create_dataloader(text=raw_data,batch_size=8,stride=4,max_length=max_length)
+    data_iter = iter(dataloader)
+    inputs, targets = next(data_iter)
 
-data_iter = iter(dataloader)
-inputs,targets = next(data_iter)
+    vocabulary_size = 97
+    vector_dimension = 4
 
-vocabulary_size = 97
-vector_dimension = 256
+    # token embedding
+    token_embedding = Embedding(vocabulary_size, vector_dimension)
+    token_embeddings_of_first_batch = token_embedding(inputs)
 
-# token embedding
-token_embedding = Embedding(vocabulary_size , vector_dimension)
+    print("Token Embedding Shape:", token_embeddings_of_first_batch.shape)
+    print(token_embeddings_of_first_batch[0])
 
-# sample of the first batch of data set
-token_embeddings = token_embedding(inputs)
+    return token_embeddings_of_first_batch[0]
 
-print(token_embeddings.shape)
+if __name__ == "__main__":
+    with open("data/oromic_data.txt", "r") as file:
+        raw_data = file.read()
 
-position_embedding = Embedding(max_length,vector_dimension)
-print(position_embedding)
+    get_vector_embedding(raw_data)
