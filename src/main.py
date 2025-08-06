@@ -2,6 +2,7 @@ import pandas as pd
 from vector_embedding import get_vector_embedding
 from simplefied_self_attention import calculate_self_attention
 from self_attensions import SelfAttention
+from causal_attention import causal_attention
 if __name__ == "__main__":
     with open("data/oromic_data.txt", "r") as file:
         raw_data = file.read()
@@ -16,3 +17,7 @@ if __name__ == "__main__":
     
     print("current_impl")
     print(result1)
+    
+    new = causal_attention(result2,4,4)
+    
+    print(new)
