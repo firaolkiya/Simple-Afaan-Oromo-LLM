@@ -20,7 +20,7 @@ def get_vector_embedding(raw_data):
     print("Token Embedding Shape:", token_embeddings_of_first_batch.shape)
     print(token_embeddings_of_first_batch[0])
 
-    return token_embeddings_of_first_batch[0]
+    return token_embeddings_of_first_batch
 
 if __name__ == "__main__":
     with open("data/oromic_data.txt", "r") as file:
